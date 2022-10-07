@@ -601,7 +601,7 @@ class ArtnetPollReplyPacket implements ArtnetPacket {
     this.estaManLo = value & 0xFF;
   }
 
-  String get shortName => String.fromCharCodes(this.packet.buffer.asUint8List(shortNameIndex, shortNameSize));
+  String get shortName => String.fromCharCodes(this.packet.buffer.asUint8List(shortNameIndex, shortNameSize).takeWhile((value) => value != 0));
   set shortName(String value) {
     for (var i = 0; i < shortNameSize; i++) {
       if (value.length <= i) {
@@ -613,7 +613,7 @@ class ArtnetPollReplyPacket implements ArtnetPacket {
     this.packet.setUint8(shortNameIndex + shortNameSize - 1, 0); //Null terminate just in case
   }
 
-  String get longName => String.fromCharCodes(this.packet.buffer.asUint8List(longNameIndex, longNameSize));
+  String get longName => String.fromCharCodes(this.packet.buffer.asUint8List(longNameIndex, longNameSize).takeWhile((value) => value != 0));
   set longName(String value) {
     for (var i = 0; i < longNameSize; i++) {
       if (value.length <= i) {
@@ -625,7 +625,7 @@ class ArtnetPollReplyPacket implements ArtnetPacket {
     this.packet.setUint8(longNameIndex + longNameSize - 1, 0); //Null terminate just in case
   }
 
-  String get nodeReport => String.fromCharCodes(packet.buffer.asUint8List(nodeReportIndex, nodeReportSize));
+  String get nodeReport => String.fromCharCodes(packet.buffer.asUint8List(nodeReportIndex, nodeReportSize).takeWhile((value) => value != 0));
   set nodeReport(String value) {
     for (var i = 0; i < nodeReportSize; i++) {
       if (value.length <= i) {
@@ -950,7 +950,7 @@ class ArtnetPollReplyPacket implements ArtnetPacket {
   @override
   String toString() {
     String string = "***$type***\n";
-    string += "Id: " + String.fromCharCodes(this.packet.buffer.asUint8List(0, 8)) + "\n";
+    string += "Id: " + String.fromCharCodes(this.packet.buffer.asUint8List(0, 8).takeWhile((value) => value != 0)) + "\n";
     string += "Opcode: 0x" + this.packet.getUint16(ArtnetOpCodeIndex).toRadixString(16) + "\n";
     string += "Ip Address: " +
         this.ip[0].toString() +
@@ -1654,7 +1654,7 @@ class ArtnetIpProgPacket implements ArtnetPacket {
   @override
   String toString() {
     String string = "***$type***\n";
-    string += "Id: " + String.fromCharCodes(this.packet.buffer.asUint8List(0, 8)) + "\n";
+    string += "Id: " + String.fromCharCodes(this.packet.buffer.asUint8List(0, 8).takeWhile((value) => value != 0)) + "\n";
     string += "Opcode: 0x" + this.packet.getUint16(ArtnetOpCodeIndex).toRadixString(16) + "\n";
     string += "Protocol Version: " + this.ArtnetProtVersion.toString() + "\n";
     string += "Command: \n";
@@ -1826,7 +1826,7 @@ class ArtnetIpProgReplyPacket implements ArtnetPacket {
   @override
   String toString() {
     String string = "***$type***\n";
-    string += "Id: " + String.fromCharCodes(this.packet.buffer.asUint8List(0, 8)) + "\n";
+    string += "Id: " + String.fromCharCodes(this.packet.buffer.asUint8List(0, 8).takeWhile((value) => value != 0)) + "\n";
     string += "Opcode: 0x" + this.packet.getUint16(ArtnetOpCodeIndex).toRadixString(16) + "\n";
     string += "Protocol Version: " + this.ArtnetProtVersion.toString() + "\n";
     string += "Node Ip: " +
